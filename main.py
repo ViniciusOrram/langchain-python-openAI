@@ -1,4 +1,5 @@
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
 
 import os
@@ -8,23 +9,30 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 numero_dias = 7
 numero_criancas = 2
-atividades = "musica"
+atividades = "praia"
 
-prompt = f"Crie um roteiro de viagem de {numero_dias} dias, para uma familia com {numero_criancas} criancas, que gosta de {atividades}"
+model_prompt = PromptTemplate(
+    template="""
+    Crie um roteiro de viagens, para um periodo de {numero_dias} dias,
+    para uma familia com {numero_criancas} criancas, 
+    que gostão de {atividades}
+    """,
 
-client = OpenAI(api_key=api_key)
-response = client.chat.completions.create(
-    model="gpt-5-nano",
-    messages=[
-        {
-            "role": "system", 
-            "content": "Você é um assistente de viagem que cria roteiros de viagem para famílias."
-        },
-        {
-            "role": "user", 
-            "content": prompt
-        }
-    ]
 )
-response_text = response.choices[0].message.content
-print(response_text)
+
+prompt = model_prompt.format(
+    dias = numero_dias,
+    numero_criancas = numero_criancas,
+    atividades = atividades
+)
+
+print ("Prompt : \n", prompt)
+
+modelo = ChatOpenAI(
+    model='gpt-5-nano',
+    temperature=0.5,
+    api_key=api_key
+)
+
+reposta = modelo.invoke(prompt)
+print(reposta.content)

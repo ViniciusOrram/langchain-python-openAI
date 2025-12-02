@@ -12,10 +12,12 @@ Mac/Linux:
 
 python3 -m venv langchain
 source langchain/bin/activate
+
 2. Instalar Dependências
 Utilize o comando abaixo para instalar as bibliotecas necessárias:
 
 pip install -r requirements.txt
+
 3. Configurar Chave da OpenAI
 Crie ou edite o arquivo .env adicionando sua chave de API da OpenAI:
 

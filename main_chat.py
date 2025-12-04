@@ -7,7 +7,7 @@ from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 load_dotenv()
-api_key = os.get("OPEN_AI_KEY")
+api_key = os.get("OPENAI_API_KEY")
 
 modelo = ChatOpenAI(
     model = "gpt-5-nano",

@@ -7,6 +7,8 @@ from langchain.globals import set_debug
 
 import os
 
+from restaurantes import cadeia_1
+
 ##set_debug(True)
 
 load_dotenv()
@@ -33,7 +35,9 @@ modelo = ChatOpenAI(
     api_key=api_key
 )
 
-cadeia = prompt_cidade | modelo | parseador
+cadeia_0 = prompt_cidade | modelo | parseador
+
+cadeia = (cadeia_0 | cadeia_1)
 
 reposta = cadeia.invoke(
     {
